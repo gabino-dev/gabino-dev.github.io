@@ -1,0 +1,1225 @@
+/* ==========================================================
+   Palette « Ardoise & ciel » (version éclaircie)
+   020300 · 36311F · 59544B · 7D8CA3 · 79A9D1
+   ========================================================== */
+:root {
+  --bg: #161a21;
+  --surface: #222833;
+  --text: #f3f6fa;
+  --text-muted: #b3bcc8;
+  --accent: #79a9d1;
+  --accent-2: #a9c8e6;
+  --accent-3: #7d8ca3;
+  --on-accent: #0b1220;
+  --orb-1: #79a9d1;
+  --orb-2: #7d8ca3;
+  --orb-3: #59544b;
+  --grad-a: #79a9d1;
+  --grad-b: #e2edf7;
+  --grad-c: #9db8d4;
+
+  /* Variables dérivées */
+  --card-bg: color-mix(in srgb, var(--surface) 82%, transparent);
+  --card-border: color-mix(in srgb, var(--text) 11%, transparent);
+  --text-soft: color-mix(in srgb, var(--text) 85%, var(--bg));
+  --accent-glow: color-mix(in srgb, var(--accent) 35%, transparent);
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ========================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+/* ---------- Fond animé (léger : dégradés radiaux, aucun filtre de flou) ---------- */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.55;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.orb-1 {
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, var(--orb-1) 0%, transparent 62%);
+  top: -420px;
+  left: -360px;
+  animation: drift-1 24s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+  width: 850px;
+  height: 850px;
+  background: radial-gradient(circle, var(--orb-2) 0%, transparent 62%);
+  top: -10%;
+  right: -400px;
+  opacity: 0.45;
+  animation: drift-2 28s ease-in-out infinite alternate;
+}
+
+.orb-3 {
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--orb-3) 0%, transparent 62%);
+  bottom: -460px;
+  left: 20%;
+  opacity: 0.35;
+  animation: drift-3 32s ease-in-out infinite alternate;
+}
+
+@keyframes drift-1 { to { transform: translate3d(140px, 120px, 0) scale(1.1); } }
+@keyframes drift-2 { to { transform: translate3d(-160px, 160px, 0) scale(0.92); } }
+@keyframes drift-3 { to { transform: translate3d(-120px, -140px, 0) scale(1.12); } }
+
+/* ---------- Header ---------- */
+header {
+  border-bottom: 1px solid var(--card-border);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.logo-badge {
+  width: 32px;
+  height: 32px;
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.logo:hover .logo-badge {
+  transform: rotate(-12deg) scale(1.08);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0.35rem;
+}
+
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+nav a:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+nav a.active {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* ---------- Layout ---------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  flex: 1;
+  width: 100%;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  min-height: min(70vh, 640px);
+  margin-bottom: 2rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  margin-bottom: 1.4rem;
+}
+
+a.eyebrow {
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+a.eyebrow:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+.eyebrow-avatar {
+  width: 22px;
+  height: 22px;
+  margin-left: -0.4rem;
+}
+
+/* Point pulsant animé uniquement via transform/opacity (fluide) */
+.pulse-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(3.2); opacity: 0; }
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, var(--grad-a), var(--grad-b), var(--grad-c), var(--grad-a));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 10s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 300% 0; }
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Nuage d'icônes flottantes */
+.icon-cloud {
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 460px;
+  justify-self: center;
+}
+
+.icon-cloud::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--text) 12%, transparent);
+  animation: spin 60s linear infinite;
+  will-change: transform;
+}
+
+.icon-cloud::after {
+  content: "";
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent), transparent 65%);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.float-icon {
+  position: absolute;
+  width: var(--size, 96px);
+  height: var(--size, 96px);
+  left: var(--x);
+  top: var(--y);
+  z-index: 1;
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+  transition: transform 0.6s var(--ease-out);
+  will-change: transform;
+}
+
+.float-icon a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: bob var(--dur, 6s) ease-in-out var(--delay, 0s) infinite;
+  will-change: transform;
+}
+
+.float-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 23%;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px color-mix(in srgb, var(--text) 10%, transparent);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.float-icon a:hover img {
+  transform: scale(1.12) rotate(-4deg);
+}
+
+@keyframes bob {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r, 0deg)); }
+  50% { transform: translate3d(0, -16px, 0) rotate(calc(var(--r, 0deg) * -1)); }
+}
+
+/* ---------- Bandeau défilant ---------- */
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border);
+  padding: 1rem 0;
+  margin: 0 0 4.5rem;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: scroll-x 32s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.marquee-item img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+@keyframes scroll-x {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Animations mises en pause hors écran (classe posée par main.js) */
+.is-offscreen,
+.is-offscreen *,
+.is-offscreen::before,
+.is-offscreen::after {
+  animation-play-state: paused !important;
+}
+
+/* ---------- Titres de section ---------- */
+.section-head {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.section-kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-top: 0.35rem;
+}
+
+/* ---------- Cartes d'apps ---------- */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 5rem;
+  perspective: 1200px;
+}
+
+.app-card {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  transition: transform 0.35s var(--ease-out), border-color 0.3s ease;
+}
+
+/* Halo qui suit la souris */
+.app-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 18%, transparent), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* Ombre au survol : seule l'opacité est animée (pas de recalcul de box-shadow) */
+.app-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: 0 24px 50px -14px color-mix(in srgb, var(--accent) 45%, transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.app-card:hover::before,
+.app-card:hover::after {
+  opacity: 1;
+}
+
+.app-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.app-card > * {
+  position: relative;
+}
+
+.app-card.featured {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2.25rem;
+}
+
+.featured-visual {
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  display: grid;
+  place-items: center;
+}
+
+.featured-visual img {
+  width: 170px;
+  height: 170px;
+  border-radius: 38px;
+  box-shadow: 0 24px 60px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: bob 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.featured-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.app-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.app-card:hover .app-icon {
+  transform: scale(1.08) rotate(-5deg);
+}
+
+.app-info h3 {
+  font-size: 1.3rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.featured .app-info h3 {
+  font-size: 1.8rem;
+}
+
+.app-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.25rem;
+}
+
+.app-desc {
+  color: var(--text-muted);
+  font-size: 0.97rem;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.app-links {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: transform 0.25s var(--ease-out), background-color 0.2s ease;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 65%, var(--accent-2)));
+  color: var(--on-accent);
+  box-shadow: 0 6px 18px var(--accent-glow);
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-secondary {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+}
+
+.btn-secondary:hover {
+  background: color-mix(in srgb, var(--text) 12%, transparent);
+  transform: translateY(-2px);
+}
+
+.btn-lg {
+  padding: 0.9rem 1.6rem;
+  font-size: 1rem;
+  border-radius: 14px;
+}
+
+/* ---------- Chiffres clés ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 1.75rem 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+}
+
+.stat strong {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.stat span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Bloc contact ---------- */
+.cta {
+  position: relative;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  border-radius: 28px;
+  border: 1px solid var(--card-border);
+  background:
+    radial-gradient(600px circle at 0% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 50%),
+    radial-gradient(600px circle at 100% 100%, color-mix(in srgb, var(--accent-3) 30%, transparent), transparent 50%),
+    var(--card-bg);
+  overflow: hidden;
+}
+
+.cta h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.6rem;
+}
+
+.cta p {
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 0 auto 1.75rem;
+}
+
+/* ---------- Apparition au scroll ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transition-delay: var(--d, 0s);
+}
+
+.js .reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* La carte d'app gère sa propre transform (inclinaison) une fois visible */
+.js .app-card.reveal.visible {
+  transition: opacity 0.8s var(--ease-out), transform 0.35s var(--ease-out), border-color 0.3s ease;
+  transition-delay: 0s;
+}
+
+/* ---------- Pages document (Privacy, Support, Terms) ---------- */
+.doc-box {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  padding: 2.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+  animation: rise 0.8s var(--ease-out) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+}
+
+.doc-box h1 {
+  font-size: clamp(1.7rem, 4vw, 2.2rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.doc-date {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.doc-box h2 {
+  font-size: 1.3rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  color: var(--text);
+}
+
+.doc-box p {
+  color: var(--text-soft);
+  margin-bottom: 1rem;
+}
+
+.doc-box ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1.2rem;
+  color: var(--text-soft);
+}
+
+.doc-box li {
+  margin-bottom: 0.4rem;
+}
+
+.doc-box a {
+  color: var(--accent);
+}
+
+.doc-box a.btn-primary {
+  color: var(--on-accent);
+}
+
+.faq-item {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 1rem;
+}
+
+.faq-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  color: var(--accent);
+}
+
+.faq-item p {
+  color: var(--text-muted);
+}
+
+.contact-card {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.app-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.doc-box a.app-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: transform 0.25s var(--ease-out), background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.doc-box a.app-chip:hover {
+  transform: translateY(-3px);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.app-chip img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* ---------- Avatar ---------- */
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* ---------- À propos ---------- */
+.about {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2.5rem;
+  margin-bottom: 5rem;
+  border-radius: 28px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+}
+
+.about-photo {
+  position: relative;
+  width: 190px;
+  height: 190px;
+}
+
+.about-photo::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--grad-a), var(--grad-b), var(--grad-c), var(--grad-a));
+  animation: spin 8s linear infinite;
+  will-change: transform;
+}
+
+.about-photo img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--surface);
+  filter: grayscale(0.15) contrast(1.05);
+}
+
+.about h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0.3rem 0 0.8rem;
+}
+
+.about p {
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  max-width: 620px;
+}
+
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-tags span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+
+/* ---------- Sous-menu d'une app (pages légales) ---------- */
+.app-subnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.doc-box a.app-subnav-id {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.app-subnav-id img {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+}
+
+.app-subnav-id strong {
+  display: block;
+  line-height: 1.2;
+}
+
+.app-subnav-id small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.app-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.doc-box .app-tabs a {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.doc-box .app-tabs a:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.doc-box .app-tabs a.active {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: transparent;
+}
+
+/* ---------- Grille de liens par app (hubs) ---------- */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.doc-box a.hub-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 0.25s var(--ease-out), background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.doc-box a.hub-card:hover {
+  transform: translateY(-3px);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.hub-card img {
+  width: 52px;
+  height: 52px;
+  border-radius: 13px;
+  flex-shrink: 0;
+}
+
+.hub-card strong {
+  display: block;
+  line-height: 1.25;
+}
+
+.hub-card small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.hub-arrow {
+  margin-left: auto;
+  color: var(--accent);
+  font-weight: 700;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.hub-card:hover .hub-arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Tableaux et listes numérotées ---------- */
+.doc-box ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.2rem;
+  color: var(--text-soft);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+}
+
+.doc-box table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+}
+
+.doc-box th,
+.doc-box td {
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--card-border);
+  vertical-align: top;
+}
+
+.doc-box th {
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+
+.doc-box tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--card-border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: var(--text);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: 0.75rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    min-height: auto;
+    padding-top: 1rem;
+  }
+
+  .hero p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .icon-cloud {
+    max-width: 340px;
+    order: -1;
+  }
+
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-card.featured {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.75rem;
+  }
+
+  .featured-visual {
+    width: 100%;
+    height: auto;
+  }
+
+  .about {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .about-tags {
+    justify-content: center;
+  }
+
+  .about-photo {
+    width: 150px;
+    height: 150px;
+  }
+
+  .featured-visual img {
+    width: 120px;
+    height: 120px;
+    border-radius: 28px;
+  }
+
+  /* Sur mobile : fond fixe pour garder une animation fluide */
+  .orb {
+    animation: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-container {
+    padding: 0.75rem 1rem;
+  }
+
+  .logo span {
+    display: none;
+  }
+
+  nav ul {
+    gap: 0.1rem;
+  }
+
+  nav a {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .float-icon {
+    width: calc(var(--size, 96px) * 0.72);
+    height: calc(var(--size, 96px) * 0.72);
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .doc-box {
+    padding: 1.5rem;
+  }
+
+}
+
+/* ---------- Accessibilité : mouvements réduits ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

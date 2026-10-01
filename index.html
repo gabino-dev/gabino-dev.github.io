@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gabino — Applications iOS & Mobile</title>
+  <meta name="description" content="Découvrez les applications mobiles développées par Gabino : Jelly Pomodoro, Anekdot., Wiki-Pick, Planet Buster et Slidoo.">
+  <meta name="theme-color" content="#14171d">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="assets/avatar-96.webp" alt="" class="logo-badge avatar" width="32" height="32">
+        <span>Gabino Apps</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Apps</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="privacy.html">Confidentialité</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <a href="#about" class="eyebrow reveal"><img src="assets/avatar-96.webp" alt="" class="eyebrow-avatar avatar" width="22" height="22"><span class="pulse-dot"></span>Gabin — développeur d'apps iOS indépendant</a>
+        <h1 class="reveal" style="--d: .08s">Des apps <span class="gradient-text">utiles, ludiques</span> & soignées.</h1>
+        <p class="reveal" style="--d: .16s">Productivité, culture, jeux entre amis : je conçois des applications mobiles pensées pour être agréables à utiliser au quotidien.</p>
+        <div class="hero-actions reveal" style="--d: .24s">
+          <a href="#apps" class="btn btn-primary btn-lg">Découvrir les apps</a>
+          <a href="support.html" class="btn btn-secondary btn-lg">Me contacter</a>
+        </div>
+      </div>
+
+      <div class="icon-cloud" aria-label="Icônes des applications">
+        <div class="float-icon" data-depth="22" style="--x: 34%; --y: 34%; --size: 132px; --dur: 6s; --r: -3deg">
+          <a href="#jelly-pomodoro"><img src="assets/icons/jelly-pomodoro.webp" alt="Jelly Pomodoro" width="132" height="132"></a>
+        </div>
+        <div class="float-icon" data-depth="14" style="--x: 4%; --y: 10%; --size: 92px; --dur: 7s; --delay: -1s; --r: 4deg">
+          <a href="#anekdot"><img src="assets/icons/anekdot.webp" alt="Anekdot." width="92" height="92"></a>
+        </div>
+        <div class="float-icon" data-depth="30" style="--x: 68%; --y: 6%; --size: 100px; --dur: 6.5s; --delay: -2.5s; --r: -4deg">
+          <a href="#wiki-pick"><img src="assets/icons/wiki-pick.webp" alt="Wiki-Pick" width="100" height="100"></a>
+        </div>
+        <div class="float-icon" data-depth="18" style="--x: 72%; --y: 62%; --size: 96px; --dur: 7.5s; --delay: -3.5s; --r: 3deg">
+          <a href="#planet-buster"><img src="assets/icons/planet-buster.webp" alt="Planet Buster" width="96" height="96"></a>
+        </div>
+        <div class="float-icon" data-depth="26" style="--x: 6%; --y: 66%; --size: 104px; --dur: 6.8s; --delay: -5s; --r: -3deg">
+          <a href="#slidoo"><img src="assets/icons/slidoo.webp" alt="Slidoo" width="104" height="104"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bandeau défilant -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-item"><img src="assets/icons/jelly-pomodoro.webp" alt="" width="32" height="32" decoding="async">Jelly Pomodoro</div>
+        <div class="marquee-item"><img src="assets/icons/anekdot.webp" alt="" width="32" height="32" decoding="async">Anekdot.</div>
+        <div class="marquee-item"><img src="assets/icons/wiki-pick.webp" alt="" width="32" height="32" decoding="async">Wiki-Pick</div>
+        <div class="marquee-item"><img src="assets/icons/planet-buster.webp" alt="" width="32" height="32" decoding="async">Planet Buster</div>
+        <div class="marquee-item"><img src="assets/icons/slidoo.webp" alt="" width="32" height="32" decoding="async">Slidoo</div>
+        <!-- Copie pour la boucle infinie -->
+        <div class="marquee-item"><img src="assets/icons/jelly-pomodoro.webp" alt="" width="32" height="32" decoding="async">Jelly Pomodoro</div>
+        <div class="marquee-item"><img src="assets/icons/anekdot.webp" alt="" width="32" height="32" decoding="async">Anekdot.</div>
+        <div class="marquee-item"><img src="assets/icons/wiki-pick.webp" alt="" width="32" height="32" decoding="async">Wiki-Pick</div>
+        <div class="marquee-item"><img src="assets/icons/planet-buster.webp" alt="" width="32" height="32" decoding="async">Planet Buster</div>
+        <div class="marquee-item"><img src="assets/icons/slidoo.webp" alt="" width="32" height="32" decoding="async">Slidoo</div>
+      </div>
+    </div>
+
+    <!-- Applications -->
+    <section id="apps">
+      <div class="section-head reveal">
+        <span class="section-kicker">Portfolio</span>
+        <h2 class="section-title">Mes applications</h2>
+      </div>
+
+      <div class="app-grid">
+        <!-- Jelly Pomodoro (mise en avant) -->
+        <article class="app-card featured reveal" id="jelly-pomodoro">
+          <div class="featured-visual">
+            <img src="assets/icons/jelly-pomodoro.webp" alt="Icône Jelly Pomodoro" width="170" height="170">
+          </div>
+          <div class="featured-body">
+            <div class="app-header">
+              <div class="app-info">
+                <h3>Jelly Pomodoro</h3>
+                <span class="app-tag">Productivité & Focus</span>
+              </div>
+            </div>
+            <p class="app-desc">
+              Un minuteur Pomodoro immersif et ludique où votre compagnon grandit du stade microscopique à la taille d'une planète entière au fur et à mesure de vos sessions d'étude et de travail.
+            </p>
+            <div class="app-links">
+              <a href="jelly-pomodoro/support.html" class="btn btn-primary">Assistance</a>
+              <a href="jelly-pomodoro/privacy.html" class="btn btn-secondary">Confidentialité</a>
+              <a href="jelly-pomodoro/terms.html" class="btn btn-secondary">Conditions</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Anekdot. -->
+        <article class="app-card reveal" id="anekdot" style="--d: .05s">
+          <div class="app-header">
+            <img src="assets/icons/anekdot.webp" alt="Icône Anekdot." class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+            <div class="app-info">
+              <h3>Anekdot.</h3>
+              <span class="app-tag">Culture & Découverte</span>
+            </div>
+          </div>
+          <p class="app-desc">
+            Un fil d'anecdotes fascinantes à faire défiler, liker et sauvegarder. De quoi nourrir votre curiosité sur une multitude de sujets, en quelques secondes par jour.
+          </p>
+          <div class="app-links">
+            <a href="anekdot/support.html" class="btn btn-secondary">Assistance</a>
+            <a href="anekdot/privacy.html" class="btn btn-secondary">Confidentialité</a>
+          </div>
+        </article>
+
+        <!-- Wiki-Pick -->
+        <article class="app-card reveal" id="wiki-pick" style="--d: .12s">
+          <div class="app-header">
+            <img src="assets/icons/wiki-pick.webp" alt="Icône Wiki-Pick" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+            <div class="app-info">
+              <h3>Wiki-Pick</h3>
+              <span class="app-tag">Jeu de cartes à collectionner</span>
+            </div>
+          </div>
+          <p class="app-desc">
+            Tout le Wikipédia français en cartes à collectionner : ouvrez des paquets, échangez, vendez aux enchères et affrontez les autres joueurs dans l'arène.
+          </p>
+          <div class="app-links">
+            <a href="https://wiki-pick.com" class="btn btn-secondary" target="_blank" rel="noopener">Site officiel ↗</a>
+            <a href="wiki-pick/support.html" class="btn btn-secondary">Assistance</a>
+            <a href="wiki-pick/privacy.html" class="btn btn-secondary">Confidentialité</a>
+          </div>
+        </article>
+
+        <!-- Planet Buster -->
+        <article class="app-card reveal" id="planet-buster" style="--d: .05s">
+          <div class="app-header">
+            <img src="assets/icons/planet-buster.webp" alt="Icône Planet Buster" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+            <div class="app-info">
+              <h3>Planet Buster</h3>
+              <span class="app-tag">Jeu d'arcade</span>
+            </div>
+          </div>
+          <p class="app-desc">
+            Un shoot'em up spatial : détruisez des planètes couche par couche, améliorez votre vaisseau et avancez de galaxie en galaxie.
+          </p>
+          <div class="app-links">
+            <a href="planet-buster/support.html" class="btn btn-secondary">Assistance</a>
+            <a href="planet-buster/privacy.html" class="btn btn-secondary">Confidentialité</a>
+          </div>
+        </article>
+
+        <!-- Slidoo -->
+        <article class="app-card reveal" id="slidoo" style="--d: .12s">
+          <div class="app-header">
+            <img src="assets/icons/slidoo.webp" alt="Icône Slidoo" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+            <div class="app-info">
+              <h3>Slidoo</h3>
+              <span class="app-tag">Jeu de soirée</span>
+            </div>
+          </div>
+          <p class="app-desc">
+            Le jeu de devinettes qui se joue à plusieurs sur un seul téléphone : un mot s'affiche, votre équipe devine, vous glissez la carte.
+          </p>
+          <div class="app-links">
+            <a href="slidoo/support.html" class="btn btn-secondary">Assistance</a>
+            <a href="slidoo/privacy.html" class="btn btn-secondary">Confidentialité</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- À propos -->
+    <section class="about reveal" id="about">
+      <div class="about-photo">
+        <img src="assets/avatar.webp" alt="Portrait de Gabin, illustration style manga" width="190" height="190" loading="lazy" decoding="async">
+      </div>
+      <div>
+        <span class="section-kicker">À propos</span>
+        <h2>Salut, moi c'est Gabin 👋</h2>
+        <p>Développeur indépendant, je conçois, code et publie mes propres applications iOS, du premier croquis jusqu'à l'App Store. J'aime les apps qui ont du caractère : utiles au quotidien, ludiques à prendre en main et soignées dans les moindres détails.</p>
+        <div class="about-tags">
+          <span>React Native</span>
+          <span>Expo</span>
+          <span>TypeScript</span>
+          <span>Supabase</span>
+          <span>Firebase</span>
+          <span>Design UI</span>
+        </div>
+        <a href="mailto:support.gabinodev@proton.me?subject=[Contact%20Gabino%20Apps]" class="btn btn-secondary">Me contacter</a>
+      </div>
+    </section>
+
+    <!-- Chiffres clés -->
+    <section class="stats">
+      <div class="stat reveal"><strong class="gradient-text" data-count="5">5</strong><span>applications mobiles</span></div>
+      <div class="stat reveal" style="--d: .08s"><strong class="gradient-text">iOS</strong><span>& Android</span></div>
+      <div class="stat reveal" style="--d: .16s"><strong class="gradient-text" data-count="48" data-suffix=" h">48 h</strong><span>délai de réponse max. au support</span></div>
+    </section>
+
+    <!-- Contact -->
+    <section class="cta reveal">
+      <h2>Une question, une idée ?</h2>
+      <p>Bug, suggestion de fonctionnalité ou simple retour : je lis tous les messages et réponds sous 24 à 48 heures.</p>
+      <a href="mailto:support.gabinodev@proton.me?subject=[Contact%20Gabino%20Apps]" class="btn btn-primary btn-lg">Écrire un e-mail</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Gabino — Gabin Laussu. Tous droits réservés.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Confidentialité</a>
+      <span>•</span>
+      <a href="terms.html">Conditions d'utilisation</a>
+      <span>•</span>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <span>•</span>
+      <a href="support.html">Contact & Support</a>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
