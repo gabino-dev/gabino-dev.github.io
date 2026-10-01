@@ -24,8 +24,50 @@
     const pauseIo = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.target.classList.toggle('is-offscreen', !entry.isIntersecting));
     });
-    document.querySelectorAll('.icon-cloud, .marquee, .hero h1, .featured-visual').forEach((el) => pauseIo.observe(el));
+    document.querySelectorAll('.icon-cloud, .marquee, .hero h1, .featured-visual, .about-photo, .stats').forEach((el) => pauseIo.observe(el));
   }
+
+  // Bandeau défilant : duplique le groupe d'apps juste assez pour couvrir la
+  // largeur visible + un groupe d'avance, puis fait défiler d'un groupe par cycle
+  // (boucle sans saut, vitesse constante quel que soit le nombre d'apps)
+  const track = document.querySelector('.marquee-track');
+  const group = track && track.querySelector('.marquee-group');
+  if (group) {
+    const SPEED = 32; // px par seconde
+    let lastWidth = 0;
+    const fill = () => {
+      const groupWidth = group.getBoundingClientRect().width;
+      if (!groupWidth) return;
+      const copies = Math.max(2, Math.ceil(track.parentElement.clientWidth / groupWidth) + 1);
+      while (track.children.length < copies) {
+        const clone = group.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      }
+      while (track.children.length > copies) track.lastElementChild.remove();
+      track.style.setProperty('--copies', copies);
+      // Ne change la durée que si la largeur du groupe change (sinon la position saute)
+      if (Math.abs(groupWidth - lastWidth) > 1) {
+        lastWidth = groupWidth;
+        track.style.setProperty('--marquee-dur', `${(groupWidth / SPEED).toFixed(2)}s`);
+      }
+    };
+    fill();
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(fill).observe(track.parentElement);
+      new ResizeObserver(fill).observe(group);
+    } else {
+      window.addEventListener('resize', fill, { passive: true });
+      window.addEventListener('load', fill);
+    }
+  }
+
+  // Le nombre d'apps affiché suit le nombre de cartes présentes sur la page
+  const appCount = document.querySelectorAll('.app-grid > .app-card').length;
+  document.querySelectorAll('[data-count-apps]').forEach((el) => {
+    el.dataset.count = appCount;
+    el.textContent = appCount;
+  });
 
   // Compteurs animés (chiffres clés)
   const counters = document.querySelectorAll('[data-count]');
@@ -54,15 +96,19 @@
   if (reduceMotion || !finePointer) return;
 
   // Cartes : inclinaison 3D + halo qui suit la souris (1 mise à jour par frame max)
+  // Le rect est mesuré à la demande et invalidé au scroll (une seule mesure par frame)
+  const hovered = new Set();
   document.querySelectorAll('.app-card').forEach((card) => {
     let rect = null;
     let raf = 0;
     let px = 0;
     let py = 0;
+    const state = { reset: () => { rect = null; } };
 
     const update = () => {
       raf = 0;
-      if (!rect) return;
+      if (!hovered.has(state)) return;
+      if (!rect) rect = card.getBoundingClientRect();
       const x = px - rect.left;
       const y = py - rect.top;
       card.style.setProperty('--mx', `${x}px`);
@@ -73,7 +119,7 @@
       card.style.transform = `perspective(1200px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translate3d(0, -4px, 0)`;
     };
 
-    card.addEventListener('pointerenter', () => { rect = card.getBoundingClientRect(); });
+    card.addEventListener('pointerenter', () => { rect = null; hovered.add(state); });
     card.addEventListener('pointermove', (e) => {
       px = e.clientX;
       py = e.clientY;
@@ -83,12 +129,13 @@
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
       rect = null;
+      hovered.delete(state);
       card.style.transform = '';
     });
   });
   // Le rect mis en cache devient faux si la page défile pendant le survol
   window.addEventListener('scroll', () => {
-    document.querySelectorAll('.app-card:hover').forEach((c) => c.dispatchEvent(new Event('pointerenter')));
+    hovered.forEach((s) => s.reset());
   }, { passive: true });
 
   // Parallaxe des icônes du hero

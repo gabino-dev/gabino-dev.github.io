@@ -49,7 +49,6 @@ body {
   flex-direction: column;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -120,9 +119,11 @@ body {
 /* ---------- Header ---------- */
 header {
   border-bottom: 1px solid var(--card-border);
-  backdrop-filter: blur(14px) saturate(150%);
-  -webkit-backdrop-filter: blur(14px) saturate(150%);
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  /* Flou léger + fond plus opaque : le flou est recalculé à chaque frame
+     au-dessus du fond animé, un petit rayon coûte bien moins cher */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -327,10 +328,11 @@ a.eyebrow:hover {
   position: absolute;
   width: var(--size, 96px);
   height: var(--size, 96px);
+  /* --x / --y désignent le centre de l'icône */
   left: var(--x);
   top: var(--y);
   z-index: 1;
-  transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+  transform: translate3d(calc(-50% + var(--px, 0px)), calc(-50% + var(--py, 0px)), 0);
   transition: transform 0.6s var(--ease-out);
   will-change: transform;
 }
@@ -372,16 +374,30 @@ a.eyebrow:hover {
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 
+/* La piste contient --copies groupes identiques (dupliqués par main.js).
+   Elle avance d'exactement un groupe par cycle : la boucle est sans à-coup,
+   quel que soit le nombre d'apps ou la largeur de l'écran. */
 .marquee-track {
   display: flex;
-  gap: 3rem;
   width: max-content;
-  animation: scroll-x 32s linear infinite;
+}
+
+.js .marquee-track {
+  animation: scroll-x var(--marquee-dur, 30s) linear infinite;
   will-change: transform;
 }
 
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
+/* L'espacement est porté par chaque item (et non par un gap entre groupes)
+   pour que tous les groupes aient exactement la même largeur */
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) {
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
 }
 
 .marquee-item {
@@ -392,6 +408,7 @@ a.eyebrow:hover {
   font-size: 1.05rem;
   color: var(--text-muted);
   white-space: nowrap;
+  padding-right: 3rem;
 }
 
 .marquee-item img {
@@ -401,7 +418,7 @@ a.eyebrow:hover {
 }
 
 @keyframes scroll-x {
-  to { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(calc(-100% / var(--copies, 2)), 0, 0); }
 }
 
 /* Animations mises en pause hors écran (classe posée par main.js) */
@@ -434,13 +451,38 @@ a.eyebrow:hover {
 }
 
 /* ---------- Cartes d'apps ---------- */
+/* Grille sur 6 pistes : l'app phare prend toute la largeur, les autres
+   3 par ligne. Les règles ci-dessous comptent les cartes pour qu'aucune
+   ne reste seule sur la dernière ligne, quel que soit le nombre d'apps. */
 .app-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
   margin-bottom: 5rem;
-  perspective: 1200px;
 }
+
+.app-grid > .app-card {
+  grid-column: span 2;
+}
+
+/* Dernière ligne de 2 cartes → chacune prend une moitié */
+.app-grid > .app-card:first-child:nth-last-child(3n) ~ .app-card:nth-last-child(-n + 2) {
+  grid-column: span 3;
+}
+
+/* Dernière ligne d'une seule carte → les 4 dernières se répartissent en 2 × 2 */
+.app-grid > .app-card:first-child:nth-last-child(3n + 2) ~ .app-card:nth-last-child(-n + 4) {
+  grid-column: span 3;
+}
+
+/* Une seule app en plus de l'app phare → pleine largeur */
+.app-grid > .app-card:first-child:nth-last-child(2) ~ .app-card {
+  grid-column: 1 / -1;
+}
+
+/* Apparition décalée de gauche à droite dans chaque ligne */
+.app-grid > .app-card:nth-child(3n + 3) { --d: .07s; }
+.app-grid > .app-card:nth-child(3n + 4) { --d: .14s; }
 
 .app-card {
   --mx: 50%;
@@ -452,7 +494,6 @@ a.eyebrow:hover {
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
-  transform-style: preserve-3d;
   transition: transform 0.35s var(--ease-out), border-color 0.3s ease;
 }
 
@@ -494,8 +535,11 @@ a.eyebrow:hover {
   position: relative;
 }
 
-.app-card.featured {
+.app-grid > .app-card.featured {
   grid-column: 1 / -1;
+}
+
+.app-card.featured {
   flex-direction: row;
   align-items: center;
   gap: 2.5rem;
@@ -1104,6 +1148,21 @@ footer a:hover {
 }
 
 /* ---------- Responsive ---------- */
+/* Tablette : 2 cartes par ligne, la dernière prend toute la largeur si elle est seule */
+@media (max-width: 1000px) {
+  .app-grid > .app-card,
+  .app-grid > .app-card:first-child:nth-last-child(n) ~ .app-card:nth-last-child(n) {
+    grid-column: span 3;
+  }
+
+  .app-grid > .app-card:first-child:nth-last-child(2n) ~ .app-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .app-grid > .app-card:nth-child(n) { --d: 0s; }
+  .app-grid > .app-card:nth-child(odd) { --d: .07s; }
+}
+
 @media (max-width: 860px) {
   .hero {
     grid-template-columns: 1fr;
@@ -1129,6 +1188,13 @@ footer a:hover {
   .app-grid {
     grid-template-columns: 1fr;
   }
+
+  .app-grid > .app-card,
+  .app-grid > .app-card:first-child:nth-last-child(n) ~ .app-card:nth-last-child(n) {
+    grid-column: 1 / -1;
+  }
+
+  .app-grid > .app-card:nth-child(n) { --d: 0s; }
 
   .app-card.featured {
     flex-direction: column;
