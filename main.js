@@ -93,6 +93,84 @@
     counters.forEach((el) => countIo.observe(el));
   }
 
+  // Fiche app : description repliée avec un bouton « plus », comme sur l'App Store
+  document.querySelectorAll('.store-desc').forEach((desc) => {
+    desc.classList.add('is-clamped');
+    if (desc.scrollHeight <= desc.clientHeight + 2) {
+      desc.classList.remove('is-clamped');
+      return;
+    }
+    const more = document.createElement('button');
+    more.type = 'button';
+    more.className = 'store-more';
+    more.textContent = 'plus';
+    more.addEventListener('click', () => {
+      desc.classList.remove('is-clamped');
+      more.remove();
+    });
+    desc.after(more);
+  });
+
+  // Fiche app : flèches de la galerie (masquées en début / fin de défilement)
+  document.querySelectorAll('.shots-wrap').forEach((wrap) => {
+    const row = wrap.querySelector('.shots');
+    const prev = wrap.querySelector('.shots-prev');
+    const next = wrap.querySelector('.shots-next');
+    if (!row || !prev || !next) return;
+    const sync = () => {
+      prev.disabled = row.scrollLeft < 4;
+      next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+    };
+    const step = () => Math.max(row.clientWidth * 0.8, 200);
+    prev.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: reduceMotion ? 'auto' : 'smooth' }));
+    next.addEventListener('click', () => row.scrollBy({ left: step(), behavior: reduceMotion ? 'auto' : 'smooth' }));
+    row.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    sync();
+  });
+
+  // Fiche app : visionneuse plein écran (clic sur une capture, swipe, flèches du clavier, Échap)
+  const shotButtons = [...document.querySelectorAll('.shot[data-full]')];
+  if (shotButtons.length && 'HTMLDialogElement' in window) {
+    const box = document.createElement('dialog');
+    box.className = 'lightbox';
+    box.setAttribute('aria-label', 'Captures d’écran');
+    box.innerHTML = `
+      <div class="lightbox-track">${shotButtons.map((b) => `
+        <div class="lightbox-slide"><img src="${b.dataset.full}" alt="${b.querySelector('img').alt}" loading="lazy" decoding="async"></div>`).join('')}
+      </div>
+      <button type="button" class="lightbox-btn lightbox-close" aria-label="Fermer">×</button>
+      <button type="button" class="lightbox-btn lightbox-prev" aria-label="Capture précédente">‹</button>
+      <button type="button" class="lightbox-btn lightbox-next" aria-label="Capture suivante">›</button>
+      <div class="lightbox-count"></div>`;
+    document.body.appendChild(box);
+    const track = box.querySelector('.lightbox-track');
+    const count = box.querySelector('.lightbox-count');
+    const current = () => Math.round(track.scrollLeft / track.clientWidth);
+    const go = (i, smooth = true) => {
+      const idx = Math.max(0, Math.min(shotButtons.length - 1, i));
+      track.scrollTo({ left: idx * track.clientWidth, behavior: smooth && !reduceMotion ? 'smooth' : 'auto' });
+    };
+    const updateCount = () => { count.textContent = `${current() + 1} / ${shotButtons.length}`; };
+    track.addEventListener('scroll', updateCount, { passive: true });
+    shotButtons.forEach((b, i) => b.addEventListener('click', () => {
+      box.showModal();
+      document.documentElement.style.overflow = 'hidden';
+      go(i, false);
+      updateCount();
+    }));
+    box.addEventListener('close', () => { document.documentElement.style.overflow = ''; });
+    box.querySelector('.lightbox-close').addEventListener('click', () => box.close());
+    box.querySelector('.lightbox-prev').addEventListener('click', () => go(current() - 1));
+    box.querySelector('.lightbox-next').addEventListener('click', () => go(current() + 1));
+    // Un clic sur le fond (hors image et boutons) ferme la visionneuse
+    track.addEventListener('click', (e) => { if (e.target.classList.contains('lightbox-slide')) box.close(); });
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current() + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(current() - 1); }
+    });
+  }
+
   if (reduceMotion || !finePointer) return;
 
   // Cartes : inclinaison 3D + halo qui suit la souris (1 mise à jour par frame max)
