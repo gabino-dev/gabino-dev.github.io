@@ -129,16 +129,15 @@
     sync();
   });
 
-  // Fiche app : visionneuse plein écran (clic sur une capture, swipe, flèches du clavier, Échap)
+  // Visionneuse plein écran (clic sur une capture, swipe, flèches du clavier, Échap).
+  // Elle affiche uniquement les captures de la rangée cliquée (une rangée = une app).
   const shotButtons = [...document.querySelectorAll('.shot[data-full]')];
   if (shotButtons.length && 'HTMLDialogElement' in window) {
     const box = document.createElement('dialog');
     box.className = 'lightbox';
     box.setAttribute('aria-label', 'Captures d’écran');
     box.innerHTML = `
-      <div class="lightbox-track">${shotButtons.map((b) => `
-        <div class="lightbox-slide"><img src="${b.dataset.full}" alt="${b.querySelector('img').alt}" loading="lazy" decoding="async"></div>`).join('')}
-      </div>
+      <div class="lightbox-track"></div>
       <button type="button" class="lightbox-btn lightbox-close" aria-label="Fermer">×</button>
       <button type="button" class="lightbox-btn lightbox-prev" aria-label="Capture précédente">‹</button>
       <button type="button" class="lightbox-btn lightbox-next" aria-label="Capture suivante">›</button>
@@ -146,17 +145,30 @@
     document.body.appendChild(box);
     const track = box.querySelector('.lightbox-track');
     const count = box.querySelector('.lightbox-count');
+    let total = 0;
     const current = () => Math.round(track.scrollLeft / track.clientWidth);
     const go = (i, smooth = true) => {
-      const idx = Math.max(0, Math.min(shotButtons.length - 1, i));
+      const idx = Math.max(0, Math.min(total - 1, i));
       track.scrollTo({ left: idx * track.clientWidth, behavior: smooth && !reduceMotion ? 'smooth' : 'auto' });
     };
-    const updateCount = () => { count.textContent = `${current() + 1} / ${shotButtons.length}`; };
+    const updateCount = () => { count.textContent = `${current() + 1} / ${total}`; };
     track.addEventListener('scroll', updateCount, { passive: true });
-    shotButtons.forEach((b, i) => b.addEventListener('click', () => {
+    shotButtons.forEach((b) => b.addEventListener('click', () => {
+      const group = [...b.parentElement.querySelectorAll('.shot[data-full]')];
+      total = group.length;
+      track.replaceChildren(...group.map((g) => {
+        const slide = document.createElement('div');
+        slide.className = 'lightbox-slide';
+        const img = document.createElement('img');
+        img.src = g.dataset.full;
+        img.alt = g.querySelector('img').alt;
+        img.decoding = 'async';
+        slide.appendChild(img);
+        return slide;
+      }));
       box.showModal();
       document.documentElement.style.overflow = 'hidden';
-      go(i, false);
+      go(group.indexOf(b), false);
       updateCount();
     }));
     box.addEventListener('close', () => { document.documentElement.style.overflow = ''; });

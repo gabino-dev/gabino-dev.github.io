@@ -494,6 +494,7 @@ a.eyebrow:hover {
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   transition: transform 0.35s var(--ease-out), border-color 0.3s ease;
 }
 
@@ -567,6 +568,7 @@ a.eyebrow:hover {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0; /* laisse la rangée de captures défiler au lieu d'élargir la carte */
 }
 
 .app-header {
@@ -1569,6 +1571,43 @@ a.eyebrow:hover {
   pointer-events: none;
 }
 
+/* Captures dans les cartes de l'accueil (3 visibles, défilement horizontal) */
+.shots-card {
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.4rem;
+  scrollbar-width: none;
+}
+
+.shots-card::-webkit-scrollbar {
+  display: none;
+}
+
+.shots-card .shot {
+  width: calc((100% - 1.2rem) / 3);
+  border-radius: 12px;
+}
+
+.shots-card .shot:hover {
+  transform: translateY(-2px);
+}
+
+.featured .shots-card .shot {
+  width: 112px;
+}
+
+.shots-card-empty {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1.39;
+  margin-bottom: 1.25rem;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, var(--text) 18%, transparent);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 /* Lien vers la fiche depuis les cartes de l'accueil */
 .app-card-link {
   color: inherit;
@@ -1752,7 +1791,7 @@ footer a:hover {
     font-size: 0.95rem;
   }
 
-  .shot {
+  .store .shot {
     width: 62vw;
     max-width: 240px;
   }
