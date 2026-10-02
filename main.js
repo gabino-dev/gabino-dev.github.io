@@ -63,7 +63,7 @@
   }
 
   // Le nombre d'apps affiché suit le nombre de cartes présentes sur la page
-  const appCount = document.querySelectorAll('.app-grid > .app-card').length;
+  const appCount = document.querySelectorAll('.app-list > .app-card').length;
   document.querySelectorAll('[data-count-apps]').forEach((el) => {
     el.dataset.count = appCount;
     el.textContent = appCount;
@@ -185,7 +185,7 @@
 
   if (reduceMotion || !finePointer) return;
 
-  // Cartes : inclinaison 3D + halo qui suit la souris (1 mise à jour par frame max)
+  // Cartes : halo qui suit la souris (1 mise à jour par frame max)
   // Le rect est mesuré à la demande et invalidé au scroll (une seule mesure par frame)
   const hovered = new Set();
   document.querySelectorAll('.app-card').forEach((card) => {
@@ -203,10 +203,6 @@
       const y = py - rect.top;
       card.style.setProperty('--mx', `${x}px`);
       card.style.setProperty('--my', `${y}px`);
-      if (!card.classList.contains('visible')) return;
-      const rx = ((y / rect.height) - 0.5) * -5;
-      const ry = ((x / rect.width) - 0.5) * 5;
-      card.style.transform = `perspective(1200px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translate3d(0, -4px, 0)`;
     };
 
     card.addEventListener('pointerenter', () => { rect = null; hovered.add(state); });
@@ -220,7 +216,6 @@
       raf = 0;
       rect = null;
       hovered.delete(state);
-      card.style.transform = '';
     });
   });
   // Le rect mis en cache devient faux si la page défile pendant le survol

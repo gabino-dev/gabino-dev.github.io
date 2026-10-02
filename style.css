@@ -450,39 +450,13 @@ a.eyebrow:hover {
   margin-top: 0.35rem;
 }
 
-/* ---------- Cartes d'apps ---------- */
-/* Grille sur 6 pistes : l'app phare prend toute la largeur, les autres
-   3 par ligne. Les règles ci-dessous comptent les cartes pour qu'aucune
-   ne reste seule sur la dernière ligne, quel que soit le nombre d'apps. */
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+/* ---------- Apps de l'accueil (une ligne par app, façon App Store) ---------- */
+.app-list {
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 5rem;
 }
-
-.app-grid > .app-card {
-  grid-column: span 2;
-}
-
-/* Dernière ligne de 2 cartes → chacune prend une moitié */
-.app-grid > .app-card:first-child:nth-last-child(3n) ~ .app-card:nth-last-child(-n + 2) {
-  grid-column: span 3;
-}
-
-/* Dernière ligne d'une seule carte → les 4 dernières se répartissent en 2 × 2 */
-.app-grid > .app-card:first-child:nth-last-child(3n + 2) ~ .app-card:nth-last-child(-n + 4) {
-  grid-column: span 3;
-}
-
-/* Une seule app en plus de l'app phare → pleine largeur */
-.app-grid > .app-card:first-child:nth-last-child(2) ~ .app-card {
-  grid-column: 1 / -1;
-}
-
-/* Apparition décalée de gauche à droite dans chaque ligne */
-.app-grid > .app-card:nth-child(3n + 3) { --d: .07s; }
-.app-grid > .app-card:nth-child(3n + 4) { --d: .14s; }
 
 .app-card {
   --mx: 50%;
@@ -490,12 +464,11 @@ a.eyebrow:hover {
   position: relative;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 22px;
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
+  --pad: 1.75rem;
+  border-radius: 26px;
+  padding: var(--pad);
   min-width: 0;
-  transition: transform 0.35s var(--ease-out), border-color 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 /* Halo qui suit la souris */
@@ -504,78 +477,48 @@ a.eyebrow:hover {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 18%, transparent), transparent 45%);
+  background: radial-gradient(520px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 14%, transparent), transparent 45%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
 
-/* Ombre au survol : seule l'opacité est animée (pas de recalcul de box-shadow) */
-.app-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  box-shadow: 0 24px 50px -14px color-mix(in srgb, var(--accent) 45%, transparent);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.app-card:hover::before,
-.app-card:hover::after {
+.app-card:hover::before {
   opacity: 1;
 }
 
 .app-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 .app-card > * {
   position: relative;
 }
 
-.app-grid > .app-card.featured {
-  grid-column: 1 / -1;
-}
-
-.app-card.featured {
-  flex-direction: row;
-  align-items: center;
-  gap: 2.5rem;
-  padding: 2.25rem;
-}
-
-.featured-visual {
-  flex-shrink: 0;
-  width: 200px;
-  height: 200px;
-  display: grid;
-  place-items: center;
-}
-
-.featured-visual img {
-  width: 170px;
-  height: 170px;
-  border-radius: 38px;
-  box-shadow: 0 24px 60px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-  animation: bob 6s ease-in-out infinite;
-  will-change: transform;
-}
-
-.featured-body {
+/* En-tête : icône + nom à gauche, bouton à droite */
+.app-row-head {
   display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-width: 0; /* laisse la rangée de captures défiler au lieu d'élargir la carte */
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
 }
 
-.app-header {
+.app-row-id {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-row-id:hover h3 {
+  color: var(--accent-2);
+}
+
+.app-row-actions {
+  flex-shrink: 0;
 }
 
 .app-icon {
@@ -587,18 +530,16 @@ a.eyebrow:hover {
   transition: transform 0.4s var(--ease-out);
 }
 
-.app-card:hover .app-icon {
-  transform: scale(1.08) rotate(-5deg);
+.app-row-id:hover .app-icon {
+  transform: scale(1.06) rotate(-4deg);
 }
 
 .app-info h3 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 750;
   letter-spacing: -0.01em;
-}
-
-.featured .app-info h3 {
-  font-size: 1.8rem;
+  line-height: 1.2;
+  transition: color 0.2s ease;
 }
 
 .app-tag {
@@ -611,21 +552,54 @@ a.eyebrow:hover {
   background: color-mix(in srgb, var(--accent) 14%, transparent);
   padding: 0.2rem 0.6rem;
   border-radius: 6px;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
 
 .app-desc {
   color: var(--text-muted);
   font-size: 0.97rem;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
+  max-width: 760px;
+  margin-bottom: 1.4rem;
 }
 
-.app-links {
+/* Rangée de captures : 5 visibles sur ordinateur, défilement au-delà.
+   Elle déborde jusqu'aux bords de la carte pour un défilement naturel. */
+.shots.shots-row {
+  gap: 0.9rem;
+  margin: 0 calc(-1 * var(--pad));
+  padding: 2px var(--pad) 0.25rem;
+  scroll-padding: 0 var(--pad);
+  scrollbar-width: none;
+}
+
+.shots-row::-webkit-scrollbar {
+  display: none;
+}
+
+.shots-row .shot {
+  width: calc((100% - 3.6rem) / 5);
+  border-radius: 18px;
+}
+
+.app-row .shots-prev { left: -1.2rem; }
+.app-row .shots-next { right: -1.2rem; }
+
+.app-row-links {
   display: flex;
-  gap: 0.6rem;
   flex-wrap: wrap;
-  margin-top: auto;
+  gap: 0.4rem 1.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.88rem;
+}
+
+.app-row-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.app-row-links a:hover {
+  color: var(--text);
 }
 
 /* ---------- Boutons ---------- */
@@ -1571,53 +1545,6 @@ a.eyebrow:hover {
   pointer-events: none;
 }
 
-/* Captures dans les cartes de l'accueil (3 visibles, défilement horizontal) */
-.shots-card {
-  gap: 0.6rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.4rem;
-  scrollbar-width: none;
-}
-
-.shots-card::-webkit-scrollbar {
-  display: none;
-}
-
-.shots-card .shot {
-  width: calc((100% - 1.2rem) / 3);
-  border-radius: 12px;
-}
-
-.shots-card .shot:hover {
-  transform: translateY(-2px);
-}
-
-.featured .shots-card .shot {
-  width: 112px;
-}
-
-.shots-card-empty {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1.39;
-  margin-bottom: 1.25rem;
-  border-radius: 12px;
-  border: 1px dashed color-mix(in srgb, var(--text) 18%, transparent);
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-/* Lien vers la fiche depuis les cartes de l'accueil */
-.app-card-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.app-card-link:hover h3 {
-  color: var(--accent-2);
-}
-
 /* ---------- Footer ---------- */
 footer {
   border-top: 1px solid var(--card-border);
@@ -1647,19 +1574,11 @@ footer a:hover {
 }
 
 /* ---------- Responsive ---------- */
-/* Tablette : 2 cartes par ligne, la dernière prend toute la largeur si elle est seule */
+/* Tablette : environ 3 captures et demie visibles */
 @media (max-width: 1000px) {
-  .app-grid > .app-card,
-  .app-grid > .app-card:first-child:nth-last-child(n) ~ .app-card:nth-last-child(n) {
-    grid-column: span 3;
+  .shots-row .shot {
+    width: 27%;
   }
-
-  .app-grid > .app-card:first-child:nth-last-child(2n) ~ .app-card:last-child {
-    grid-column: 1 / -1;
-  }
-
-  .app-grid > .app-card:nth-child(n) { --d: 0s; }
-  .app-grid > .app-card:nth-child(odd) { --d: .07s; }
 }
 
 @media (max-width: 860px) {
@@ -1684,29 +1603,6 @@ footer a:hover {
     order: -1;
   }
 
-  .app-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .app-grid > .app-card,
-  .app-grid > .app-card:first-child:nth-last-child(n) ~ .app-card:nth-last-child(n) {
-    grid-column: 1 / -1;
-  }
-
-  .app-grid > .app-card:nth-child(n) { --d: 0s; }
-
-  .app-card.featured {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-    padding: 1.75rem;
-  }
-
-  .featured-visual {
-    width: 100%;
-    height: auto;
-  }
-
   .about {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -1721,12 +1617,6 @@ footer a:hover {
   .about-photo {
     width: 150px;
     height: 150px;
-  }
-
-  .featured-visual img {
-    width: 120px;
-    height: 120px;
-    border-radius: 28px;
   }
 
   .store-info {
@@ -1794,6 +1684,30 @@ footer a:hover {
   .store .shot {
     width: 62vw;
     max-width: 240px;
+  }
+
+  .app-card {
+    --pad: 1.15rem;
+    border-radius: 22px;
+  }
+
+  .app-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+  }
+
+  .app-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .shots.shots-row {
+    gap: 0.6rem;
+  }
+
+  .shots-row .shot {
+    width: 40%;
+    border-radius: 14px;
   }
 
   .shots-nav,

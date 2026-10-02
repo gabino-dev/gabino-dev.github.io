@@ -86,107 +86,131 @@
         <h2 class="section-title">Mes applications</h2>
       </div>
 
-      <div class="app-grid">
-        <!-- Jelly Pomodoro (mise en avant) -->
-        <article class="app-card featured reveal" id="jelly-pomodoro">
-          <div class="featured-visual">
-            <img src="assets/icons/jelly-pomodoro.webp" alt="Icône Jelly Pomodoro" width="170" height="170">
-          </div>
-          <div class="featured-body">
-            <div class="app-header">
+      <!-- Une ligne par app, façon résultat de recherche App Store : en-tête, description, captures -->
+      <div class="app-list">
+        <!-- Jelly Pomodoro -->
+        <article class="app-card app-row reveal" id="jelly-pomodoro">
+          <div class="app-row-head">
+            <a href="jelly-pomodoro/index.html" class="app-row-id">
+              <img src="assets/icons/jelly-pomodoro.webp" alt="" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
               <div class="app-info">
-                <h3><a href="jelly-pomodoro/index.html" class="app-card-link">Jelly Pomodoro</a></h3>
+                <h3>Jelly Pomodoro</h3>
                 <span class="app-tag">Productivité & Focus</span>
               </div>
+            </a>
+            <div class="app-row-actions">
+              <a href="jelly-pomodoro/index.html" class="btn-get">Voir</a>
             </div>
-            <p class="app-desc">
-              Un minuteur Pomodoro immersif et ludique où votre compagnon grandit du stade microscopique à la taille d'une planète entière au fur et à mesure de vos sessions d'étude et de travail.
-            </p>
-            <div class="shots shots-card" aria-label="Captures d'écran de Jelly Pomodoro">
-              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/1-full.webp"><img src="assets/screenshots/jelly-pomodoro/1-sm.webp" alt="Jelly Pomodoro — capture 1 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/2-full.webp"><img src="assets/screenshots/jelly-pomodoro/2-sm.webp" alt="Jelly Pomodoro — capture 2 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/3-full.webp"><img src="assets/screenshots/jelly-pomodoro/3-sm.webp" alt="Jelly Pomodoro — capture 3 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/4-full.webp"><img src="assets/screenshots/jelly-pomodoro/4-sm.webp" alt="Jelly Pomodoro — capture 4 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/5-full.webp"><img src="assets/screenshots/jelly-pomodoro/5-sm.webp" alt="Jelly Pomodoro — capture 5 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/6-full.webp"><img src="assets/screenshots/jelly-pomodoro/6-sm.webp" alt="Jelly Pomodoro — capture 6 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
+          </div>
+          <p class="app-desc">Un minuteur Pomodoro immersif et ludique où votre compagnon grandit du stade microscopique à la taille d'une planète entière au fur et à mesure de vos sessions d'étude et de travail.</p>
+          <div class="shots-wrap">
+            <div class="shots shots-row" aria-label="Captures d'écran de Jelly Pomodoro">
+              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/1-full.webp"><img src="assets/screenshots/jelly-pomodoro/1.webp" alt="Jelly Pomodoro — capture 1 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/2-full.webp"><img src="assets/screenshots/jelly-pomodoro/2.webp" alt="Jelly Pomodoro — capture 2 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/3-full.webp"><img src="assets/screenshots/jelly-pomodoro/3.webp" alt="Jelly Pomodoro — capture 3 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/4-full.webp"><img src="assets/screenshots/jelly-pomodoro/4.webp" alt="Jelly Pomodoro — capture 4 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/5-full.webp"><img src="assets/screenshots/jelly-pomodoro/5.webp" alt="Jelly Pomodoro — capture 5 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/jelly-pomodoro/6-full.webp"><img src="assets/screenshots/jelly-pomodoro/6.webp" alt="Jelly Pomodoro — capture 6 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
             </div>
-            <div class="app-links">
-              <a href="jelly-pomodoro/index.html" class="btn btn-primary">Voir l'app</a>
-              <a href="jelly-pomodoro/support.html" class="btn btn-secondary">Assistance</a>
-              <a href="jelly-pomodoro/privacy.html" class="btn btn-secondary">Confidentialité</a>
-            </div>
+            <button type="button" class="shots-nav shots-prev" aria-label="Captures précédentes">‹</button>
+            <button type="button" class="shots-nav shots-next" aria-label="Captures suivantes">›</button>
+          </div>
+          <div class="app-row-links">
+            <a href="jelly-pomodoro/index.html">Fiche de l'app</a>
+            <a href="jelly-pomodoro/support.html">Assistance</a>
+            <a href="jelly-pomodoro/privacy.html">Confidentialité</a>
           </div>
         </article>
 
         <!-- Anekdot. -->
-        <article class="app-card reveal" id="anekdot">
-          <div class="app-header">
-            <img src="assets/icons/anekdot.webp" alt="Icône Anekdot." class="app-icon" width="68" height="68" loading="lazy" decoding="async">
-            <div class="app-info">
-              <h3><a href="anekdot/index.html" class="app-card-link">Anekdot.</a></h3>
-              <span class="app-tag">Culture & Découverte</span>
+        <article class="app-card app-row reveal" id="anekdot">
+          <div class="app-row-head">
+            <a href="anekdot/index.html" class="app-row-id">
+              <img src="assets/icons/anekdot.webp" alt="" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+              <div class="app-info">
+                <h3>Anekdot.</h3>
+                <span class="app-tag">Culture & Découverte</span>
+              </div>
+            </a>
+            <div class="app-row-actions">
+              <a href="anekdot/index.html" class="btn-get">Voir</a>
             </div>
           </div>
-          <p class="app-desc">
-            Un fil d'anecdotes fascinantes à faire défiler, liker et sauvegarder. De quoi nourrir votre curiosité sur une multitude de sujets, en quelques secondes par jour.
-          </p>
-          <div class="shots shots-card" aria-label="Captures d'écran de Anekdot.">
-            <button type="button" class="shot" data-full="assets/screenshots/anekdot/1-full.webp"><img src="assets/screenshots/anekdot/1-sm.webp" alt="Anekdot. — capture 1 sur 5" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/anekdot/2-full.webp"><img src="assets/screenshots/anekdot/2-sm.webp" alt="Anekdot. — capture 2 sur 5" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/anekdot/3-full.webp"><img src="assets/screenshots/anekdot/3-sm.webp" alt="Anekdot. — capture 3 sur 5" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/anekdot/4-full.webp"><img src="assets/screenshots/anekdot/4-sm.webp" alt="Anekdot. — capture 4 sur 5" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/anekdot/5-full.webp"><img src="assets/screenshots/anekdot/5-sm.webp" alt="Anekdot. — capture 5 sur 5" width="240" height="519" loading="lazy" decoding="async"></button>
-          </div>
-          <div class="app-links">
-            <a href="anekdot/index.html" class="btn btn-primary">Voir l'app</a>
-            <a href="anekdot/support.html" class="btn btn-secondary">Assistance</a>
-          </div>
-        </article>
-
-        <!-- Planet Buster -->
-        <article class="app-card reveal" id="planet-buster">
-          <div class="app-header">
-            <img src="assets/icons/planet-buster.webp" alt="Icône Planet Buster" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
-            <div class="app-info">
-              <h3><a href="planet-buster/index.html" class="app-card-link">Planet Buster</a></h3>
-              <span class="app-tag">Jeu d'arcade</span><span class="badge-soon">En cours</span>
+          <p class="app-desc">Un fil d'anecdotes fascinantes à faire défiler, liker et sauvegarder. De quoi nourrir votre curiosité sur une multitude de sujets, en quelques secondes par jour.</p>
+          <div class="shots-wrap">
+            <div class="shots shots-row" aria-label="Captures d'écran de Anekdot.">
+              <button type="button" class="shot" data-full="assets/screenshots/anekdot/1-full.webp"><img src="assets/screenshots/anekdot/1.webp" alt="Anekdot. — capture 1 sur 5" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/anekdot/2-full.webp"><img src="assets/screenshots/anekdot/2.webp" alt="Anekdot. — capture 2 sur 5" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/anekdot/3-full.webp"><img src="assets/screenshots/anekdot/3.webp" alt="Anekdot. — capture 3 sur 5" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/anekdot/4-full.webp"><img src="assets/screenshots/anekdot/4.webp" alt="Anekdot. — capture 4 sur 5" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/anekdot/5-full.webp"><img src="assets/screenshots/anekdot/5.webp" alt="Anekdot. — capture 5 sur 5" width="460" height="995" loading="lazy" decoding="async"></button>
             </div>
+            <button type="button" class="shots-nav shots-prev" aria-label="Captures précédentes">‹</button>
+            <button type="button" class="shots-nav shots-next" aria-label="Captures suivantes">›</button>
           </div>
-          <p class="app-desc">
-            Un shoot'em up spatial : détruisez des planètes couche par couche, améliorez votre vaisseau et avancez de galaxie en galaxie.
-          </p>
-          <div class="shots-card-empty">Captures d'écran à venir</div>
-          <div class="app-links">
-            <a href="planet-buster/index.html" class="btn btn-primary">Voir l'app</a>
-            <a href="planet-buster/support.html" class="btn btn-secondary">Assistance</a>
+          <div class="app-row-links">
+            <a href="anekdot/index.html">Fiche de l'app</a>
+            <a href="anekdot/support.html">Assistance</a>
+            <a href="anekdot/privacy.html">Confidentialité</a>
           </div>
         </article>
 
         <!-- Slidoo -->
-        <article class="app-card reveal" id="slidoo">
-          <div class="app-header">
-            <img src="assets/icons/slidoo.webp" alt="Icône Slidoo" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
-            <div class="app-info">
-              <h3><a href="slidoo/index.html" class="app-card-link">Slidoo</a></h3>
-              <span class="app-tag">Jeu de soirée</span>
+        <article class="app-card app-row reveal" id="slidoo">
+          <div class="app-row-head">
+            <a href="slidoo/index.html" class="app-row-id">
+              <img src="assets/icons/slidoo.webp" alt="" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+              <div class="app-info">
+                <h3>Slidoo</h3>
+                <span class="app-tag">Jeu de soirée</span>
+              </div>
+            </a>
+            <div class="app-row-actions">
+              <a href="slidoo/index.html" class="btn-get">Voir</a>
             </div>
           </div>
-          <p class="app-desc">
-            Le jeu de devinettes qui se joue à plusieurs sur un seul téléphone : un mot s'affiche, votre équipe devine, vous glissez la carte.
-          </p>
-          <div class="shots shots-card" aria-label="Captures d'écran de Slidoo">
-            <button type="button" class="shot" data-full="assets/screenshots/slidoo/1-full.webp"><img src="assets/screenshots/slidoo/1-sm.webp" alt="Slidoo — capture 1 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/slidoo/2-full.webp"><img src="assets/screenshots/slidoo/2-sm.webp" alt="Slidoo — capture 2 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/slidoo/3-full.webp"><img src="assets/screenshots/slidoo/3-sm.webp" alt="Slidoo — capture 3 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/slidoo/4-full.webp"><img src="assets/screenshots/slidoo/4-sm.webp" alt="Slidoo — capture 4 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/slidoo/5-full.webp"><img src="assets/screenshots/slidoo/5-sm.webp" alt="Slidoo — capture 5 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
-            <button type="button" class="shot" data-full="assets/screenshots/slidoo/6-full.webp"><img src="assets/screenshots/slidoo/6-sm.webp" alt="Slidoo — capture 6 sur 6" width="240" height="519" loading="lazy" decoding="async"></button>
+          <p class="app-desc">Le jeu de devinettes qui se joue à plusieurs sur un seul téléphone : un mot s'affiche, votre équipe devine, vous glissez la carte.</p>
+          <div class="shots-wrap">
+            <div class="shots shots-row" aria-label="Captures d'écran de Slidoo">
+              <button type="button" class="shot" data-full="assets/screenshots/slidoo/1-full.webp"><img src="assets/screenshots/slidoo/1.webp" alt="Slidoo — capture 1 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/slidoo/2-full.webp"><img src="assets/screenshots/slidoo/2.webp" alt="Slidoo — capture 2 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/slidoo/3-full.webp"><img src="assets/screenshots/slidoo/3.webp" alt="Slidoo — capture 3 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/slidoo/4-full.webp"><img src="assets/screenshots/slidoo/4.webp" alt="Slidoo — capture 4 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/slidoo/5-full.webp"><img src="assets/screenshots/slidoo/5.webp" alt="Slidoo — capture 5 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+              <button type="button" class="shot" data-full="assets/screenshots/slidoo/6-full.webp"><img src="assets/screenshots/slidoo/6.webp" alt="Slidoo — capture 6 sur 6" width="460" height="995" loading="lazy" decoding="async"></button>
+            </div>
+            <button type="button" class="shots-nav shots-prev" aria-label="Captures précédentes">‹</button>
+            <button type="button" class="shots-nav shots-next" aria-label="Captures suivantes">›</button>
           </div>
-          <div class="app-links">
-            <a href="slidoo/index.html" class="btn btn-primary">Voir l'app</a>
-            <a href="slidoo/support.html" class="btn btn-secondary">Assistance</a>
+          <div class="app-row-links">
+            <a href="slidoo/index.html">Fiche de l'app</a>
+            <a href="slidoo/support.html">Assistance</a>
+            <a href="slidoo/privacy.html">Confidentialité</a>
           </div>
         </article>
+
+        <!-- Planet Buster -->
+        <article class="app-card app-row reveal" id="planet-buster">
+          <div class="app-row-head">
+            <a href="planet-buster/index.html" class="app-row-id">
+              <img src="assets/icons/planet-buster.webp" alt="" class="app-icon" width="68" height="68" loading="lazy" decoding="async">
+              <div class="app-info">
+                <h3>Planet Buster</h3>
+                <span class="app-tag">Jeu d'arcade</span>
+              </div>
+            </a>
+            <div class="app-row-actions">
+              <span class="badge-soon">En cours</span>
+            </div>
+          </div>
+          <p class="app-desc">Un shoot'em up spatial : détruisez des planètes couche par couche, améliorez votre vaisseau et avancez de galaxie en galaxie.</p>
+          <div class="app-row-links">
+            <a href="planet-buster/index.html">Fiche de l'app</a>
+            <a href="planet-buster/support.html">Assistance</a>
+            <a href="planet-buster/privacy.html">Confidentialité</a>
+          </div>
+        </article>
+
       </div>
     </section>
 
