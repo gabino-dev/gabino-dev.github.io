@@ -1738,3 +1738,17 @@ footer a:hover {
     transform: none;
   }
 }
+
+/* Captures Mac (paysage) : environ 2 visibles et demie sur ordinateur */
+.shots-row .shot.shot-mac {
+  width: calc((100% - 1.8rem) / 2.5);
+  aspect-ratio: 800 / 542;
+  border-radius: 12px;
+}
+
+@media (max-width: 860px) {
+  .shots-row .shot.shot-mac {
+    width: 80%;
+    border-radius: 10px;
+  }
+}
